@@ -69,7 +69,7 @@ int main()
   }
   print_list(list_array);
   if (!sort_list(list_array)) {
-    printf("Failed to create list\n");
+    printf("Failed to sort list\n");
     return 0;
   }
   print_list(list_array);
