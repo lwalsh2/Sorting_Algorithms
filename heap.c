@@ -190,13 +190,21 @@ int append_node(heap_node * new, heap * list) {
 	else {
     heap_node * iter = list->root;
     int parent = 0; // 0 - L, 1 - R
+    int cL = 0;
+    int cLL = 0;
+    int cR = 0;
+    int cRL = 0;
     while (iter) {
-      if (count_full_left(iter) <= count_full_right(iter)+1 && count_full_left(iter->left) != count_full_right(iter->left)) {
+      cL = count_full_left(iter);
+      cLL = count_full_left(iter->left);
+      cR = count_full_right(iter);
+      cRL = count_full_right(iter->left);
+      if (cL <= cR+1 && cLL != cRL) {
 				new->parent = iter;
         iter = iter->left;
         parent = 0;
       }
-      else if (count_full_left(iter) <= count_full_right(iter) && count_full_left(iter->left) == count_full_right(iter->left)) {
+      else if (cL <= cR && cLL == cRL) {
 				new->parent = iter;
         iter = iter->left;
         parent = 0;
@@ -261,6 +269,49 @@ void remove_head(heap * heap_list) {
   }
 }
 
+// Parses list and prints node data.
+void print_sub_heap(heap_node * node) {
+	if (!node) {
+		return;
+	}
+	printf("\n   %d: ", node->number);
+  if (node->left) {
+    printf("Left: %d ", node->left->number);
+  }
+  if (node->right) {
+    printf("Right: %d ", node->right->number);
+  }
+  if (node->left) {
+    print_sub_heap(node->left);
+  }
+  if (node->right) {
+    print_sub_heap(node->right);
+  }
+}
+
+// Parses list and prints node data.
+void print_heap(heap * list) {
+	printf("\nPrinting heap: \n");
+	if (!list || !list->root) {
+		printf("   No heap, root empty\n");
+		return;
+	}
+	printf("   Root %d ", list->root->number);
+	if (list->root->left) {
+    printf("Left: %d ", list->root->left->number);
+  }
+  if (list->root->right) {
+    printf("Right: %d ", list->root->right->number);
+  }
+  if (list->root->left) {
+    print_sub_heap(list->root->left);
+  }
+  if (list->root->right) {
+    print_sub_heap(list->root->right);
+  }
+  printf("\n");
+}
+
 // Prints the array list.
 void print_array(int list[]) {
 	printf("Printing list: ");
@@ -282,6 +333,9 @@ int sort_list(int heap_array[], heap * heap_list) {
 	}
 	for (int i = size-1; i > -1; --i) {
     heap_array[i] = heap_list->root->number;
+    print_array(heap_array);
+    remove_head(heap_list);
+    print_heap(heap_list);
   }
 	return 1;
 }
@@ -309,6 +363,7 @@ int main()
 	for (int i = 0; i < size; ++i) {
     append_node(create_node(heap_array[i]), heap_list);
   }
+  print_heap(heap_list);
   sort_list(heap_array, heap_list);
   free(heap_list);
   printf("Sorted Array:\n");
