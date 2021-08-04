@@ -135,23 +135,23 @@ void balance_down_heap(heap * list) {
   // If child is greater, swap data of nodes.
   while (node->left || node->right) {
     if (node->right && node->left) {
-      if (node->left > node->right && node->number < node->right->number) {
+      if (node->left > node->right && node->number < node->left->number) {
         tmp_number = node->number;
         node->number = node->right->number;
         node->right->number = tmp_number;
         node = node->right;
+      }
+      else if (node->left < node->right && node->number < node->right->number) {
+        tmp_number = node->number;
+        node->number = node->left->number;
+        node->left->number = tmp_number;
+        node = node->left;
       }
       else if (node->number < node->left->number) {
         tmp_number = node->number;
         node->number = node->left->number;
         node->left->number = tmp_number;
         node = node->left;
-      }
-      else if (node->number < node->right->number) {
-        tmp_number = node->number;
-        node->number = node->right->number;
-        node->right->number = tmp_number;
-        node = node->right;
       }
       else {
         break;
@@ -263,6 +263,7 @@ void remove_head(heap * heap_list) {
     free(heap_list->tail);
     heap_list->tail = new_tail;
     balance_down_heap(heap_list);
+    balance_up_heap(heap_list->tail, heap_list);
   }
   else {
     empty_list(heap_list);
