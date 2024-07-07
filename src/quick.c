@@ -4,10 +4,26 @@
  * By: Liam P. Walsh
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#define size 10
+#include <quick.h>
+
+int main()
+{
+  printf("Sorting with Quick Sort:\n");
+  int list_array[size] = {0};
+  if (!fill_list(list_array)) {
+    printf("Failed to create list\n");
+    return 0;
+  }
+  print_list(list_array, 0, size-1);
+  if (!sort_list(list_array, 0, size-1)) {
+    printf("Failed to sort list\n");
+    return 0;
+  }
+  print_list(list_array, 0, size-1);
+
+  return 0;
+}
+
 
 // Prints the list.
 void print_list(int list[], int start, int end) {
@@ -68,23 +84,4 @@ int fill_list(int list[]) {
     list[i] = rand()%100;
   }
 	return 1;
-}
-
-
-int main()
-{
-  printf("Sorting with Quick Sort:\n");
-  int list_array[size] = {0};
-  if (!fill_list(list_array)) {
-    printf("Failed to create list\n");
-    return 0;
-  }
-  print_list(list_array, 0, size-1);
-  if (!sort_list(list_array, 0, size-1)) {
-    printf("Failed to sort list\n");
-    return 0;
-  }
-  print_list(list_array, 0, size-1);
-
-  return 0;
 }

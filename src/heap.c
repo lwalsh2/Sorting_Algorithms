@@ -4,28 +4,25 @@
  * heap uses AVL method (Balances after append and remove)
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#define size 10
+#include "heap.h"
 
-// Declares heap node struct.
-typedef struct heap_node_ {
-  // Data of heap node
-  int number;
-  // Pointers to nodes
-  struct heap_node_ * right;
-	struct heap_node_ * left;
-  struct heap_node_ * parent;
-} heap_node;
-
-// Declares heap struct. (hold root)
-typedef struct heap_ {
-  // The root node of the heap
-  heap_node * root;
-  heap_node * tail;
-} heap;
-
+int main()
+{
+  printf("Creating Heap:\n");
+	heap * heap_list = create_list();
+  int heap_array[size] = {0};
+  fill_list(heap_array);
+  print_array(heap_array);
+	for (int i = 0; i < size; ++i) {
+    append_node(create_node(heap_array[i]), heap_list);
+  }
+  print_heap(heap_list);
+  sort_list(heap_array, heap_list);
+  free(heap_list);
+  printf("Sorted Array:\n");
+	print_array(heap_array);
+  return 0;
+}
 // Allocates node with the given data, and returns address.
 heap_node * create_node(int number) {
 	// Allocate data for node, setting values to NULL/0.
@@ -352,22 +349,4 @@ int fill_list(int list[]) {
     list[i] = rand()%100;
   }
 	return 1;
-}
-
-int main()
-{
-  printf("Creating Heap:\n");
-	heap * heap_list = create_list();
-  int heap_array[size] = {0};
-  fill_list(heap_array);
-  print_array(heap_array);
-	for (int i = 0; i < size; ++i) {
-    append_node(create_node(heap_array[i]), heap_list);
-  }
-  print_heap(heap_list);
-  sort_list(heap_array, heap_list);
-  free(heap_list);
-  printf("Sorted Array:\n");
-	print_array(heap_array);
-  return 0;
 }
