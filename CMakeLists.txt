@@ -12,4 +12,5 @@ else()
     message("RELEASE VERSION")
 endif()
 
+include_directories(include)
 add_subdirectory(src)

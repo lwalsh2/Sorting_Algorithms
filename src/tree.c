@@ -4,26 +4,24 @@
  * Tree uses AVL method (Balances after append and remove)
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#define size 10
+#include "tree.h"
 
-// Declares tree node struct.
-typedef struct tree_node_ {
-  // Data of tree node
-  int number;
-  // Pointers to nodes
-  struct tree_node_ * right;
-	struct tree_node_ * left;
-  struct tree_node_ * parent;
-} tree_node;
+int main()
+{
+  printf("Unsorted Array:\n");
+	tree * tree_list = create_list();
+  int tree_array[size] = {0};
+  fill_lists(tree_array, tree_list);
+  print_array(tree_array);
 
-// Declares tree struct. (hold root)
-typedef struct tree_ {
-  // The root node of the tree
-  tree_node * root;
-} tree;
+  sort_list(tree_array, tree_list);
+
+  empty_list(tree_list);
+  free(tree_list);
+  printf("Sorted Array:\n");
+	print_array(tree_array);
+  return 0;
+}
 
 // Allocates node with the given data, and returns address.
 tree_node * create_node(int number) {
@@ -261,21 +259,4 @@ void print_array(int list[]) {
     printf("%d ", list[i]);
   }
   printf("\n");
-}
-
-int main()
-{
-  printf("Unsorted Array:\n");
-	tree * tree_list = create_list();
-  int tree_array[size] = {0};
-  fill_lists(tree_array, tree_list);
-  print_array(tree_array);
-
-  sort_list(tree_array, tree_list);
-
-  empty_list(tree_list);
-  free(tree_list);
-  printf("Sorted Array:\n");
-	print_array(tree_array);
-  return 0;
 }

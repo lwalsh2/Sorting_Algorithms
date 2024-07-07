@@ -4,10 +4,25 @@
  * By: Liam P. Walsh
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#define size 10
+#include "bubble.h"
+
+int main()
+{
+  printf("Sorting with Bubble Sort:\n");
+  int list_array[size] = {0};
+  if (!fill_list(list_array)) {
+    printf("Failed to create list\n");
+    return 0;
+  }
+  print_list(list_array);
+  if (!sort_list(list_array)) {
+    printf("Failed to sort list\n");
+    return 0;
+  }
+  print_list(list_array);
+
+  return 0;
+}
 
 // Bubble Sort
 int sort_list(int list[]) {
@@ -57,22 +72,4 @@ void print_list(int list[]) {
     printf("%d ", list[i]);
   }
   printf("\n");
-}
-
-int main()
-{
-  printf("Sorting with Bubble Sort:\n");
-  int list_array[size] = {0};
-  if (!fill_list(list_array)) {
-    printf("Failed to create list\n");
-    return 0;
-  }
-  print_list(list_array);
-  if (!sort_list(list_array)) {
-    printf("Failed to sort list\n");
-    return 0;
-  }
-  print_list(list_array);
-
-  return 0;
 }
