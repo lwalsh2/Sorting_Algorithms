@@ -1,5 +1,5 @@
 # Sorting Algorithms
-This is a Chat Room project that utilizes Sockets and encryption in Python. Meant for better understanding concepts of sockets, server/client operations, and encrypting messages.
+This is a Sorting Algorithm project that utilizes `c` to build different algorithms as examples.
 
 ## Dependencies:
     cmake
