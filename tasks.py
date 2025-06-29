@@ -4,6 +4,8 @@ Tasks to run through invoke
 
 from invoke import task, context
 
+# The Sort Methods that can be called:
+sort_methods = ['bubble', 'heap', 'merge', 'quick', 'tree']
 
 @task()
 def clean(cmd: context.Context) -> None:
@@ -13,7 +15,7 @@ def clean(cmd: context.Context) -> None:
     Returns:
         None
     """
-    cmd.run("rm -rf bin")
+    cmd.run('rm -rf bin')
 
 
 @task(clean)
@@ -24,7 +26,23 @@ def build(cmd: context.Context) -> None:
     Returns:
         None
     """
-    cmd.run("mkdir bin")
-    cmd.run("cmake -B bin -S .")
-    cmd.run("cd bin; make")
+    cmd.run('mkdir bin;cmake -B bin -S .;cd bin;make')
 
+@task(build, help={'sort_type': 'Name of the sorting method to use. Use `all` to run each'})
+def run(cmd: context.Context, sort_type: str) -> None:
+    """Builds the project. Can be called with `invoke build <sort_type>`.
+    For example, using `invoke build all` runs each, while
+    `invoke build bubble` only runs bubble sort.
+    Args:
+        cmd (context.Context): Context invoke passes to run commands
+    Returns:
+        None
+    """
+    sort_lower = sort_type.lower()
+    if sort_lower == 'all':
+        for sort_method in sort_methods:
+            cmd.run(f"./bin/src/{sort_method}")
+    elif sort_lower in sort_methods:
+        cmd.run(f"./bin/src/{sort_lower}")
+    else:
+        print(f"Sort Type '{sort_type}' is not implemented")
