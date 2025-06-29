@@ -35,6 +35,7 @@ def run(cmd: context.Context, sort_type: str) -> None:
     `invoke build bubble` only runs bubble sort.
     Args:
         cmd (context.Context): Context invoke passes to run commands
+        sort_type (str): The sorting method to run, or `all`
     Returns:
         None
     """
