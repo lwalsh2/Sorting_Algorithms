@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
 # Set thread requirements for Ubuntu 20.04
-# (Automatically included in 22.04)
+# (Automatically included in 22.04 and forward)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
