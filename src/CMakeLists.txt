@@ -8,7 +8,7 @@ find_package(Threads REQUIRED)
 # Compiles passed struct with corresponding source code
 function(compile_struct struct_type struct_src)
     # Define / Create Executable binary
-    add_executable(${struct_type} ${struct_src})
+    add_library(${struct_type} ${struct_src})
 
     # Add struct compilation flags / links
     target_compile_options(${struct_type} PRIVATE -Wall)
@@ -18,7 +18,7 @@ function(compile_struct struct_type struct_src)
     target_link_libraries(${struct_type} PRIVATE Threads::Threads)
 endfunction()
 
-# Call each algorithm to compile
+# Call each algorithm to compile into a library
 compile_struct(bubble bubble.c)
 compile_struct(heap heap.c)
 compile_struct(merge merge.c)

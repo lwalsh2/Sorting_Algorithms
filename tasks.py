@@ -26,16 +26,21 @@ def build(cmd: context.Context) -> None:
     Returns:
         None
     """
-    cmd.run('mkdir bin;cmake -B bin -S .;cd bin;make')
+    # Build the libraries and test binaries
+    cmd.run('mkdir bin build;cmake -B build -S .;cd build;make')
+    # Move the test binaries to the project directory
+    test_loc = 'build/tests/'
+    for sort_method in sort_methods:
+        cmd.run(f"cp {test_loc}{sort_method}_test bin/")
 
 @task(build, help={'sort_type': 'Name of the sorting method to use. Use `all` to run each'})
-def run(cmd: context.Context, sort_type: str) -> None:
-    """Builds the project. Can be called with `invoke build <sort_type>`.
-    For example, using `invoke build all` runs each, while
-    `invoke build bubble` only runs bubble sort.
+def test(cmd: context.Context, sort_type: str) -> None:
+    """Runs and tests the algorithms. Can be called with `invoke test <sort_type>`.
+    For example, using `invoke test all` runs each, while
+    `invoke test bubble` only runs bubble sort.
     Args:
         cmd (context.Context): Context invoke passes to run commands
-        sort_type (str): The sorting method to run, or `all`
+        sort_type (str): The sorting method to test, or `all`
     Returns:
         None
     """
@@ -44,6 +49,6 @@ def run(cmd: context.Context, sort_type: str) -> None:
         for sort_method in sort_methods:
             cmd.run(f"./bin/src/{sort_method}")
     elif sort_lower in sort_methods:
-        cmd.run(f"./bin/src/{sort_lower}")
+        cmd.run(f"./bin/{sort_lower}_test")
     else:
         print(f"Sort Type '{sort_type}' is not implemented")

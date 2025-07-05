@@ -6,24 +6,6 @@
 
 #include "bubble.h"
 
-int main()
-{
-  printf("Sorting with Bubble Sort:\n");
-  int list_array[size] = {0};
-  if (!fill_list(list_array)) {
-    printf("Failed to create list\n");
-    return 0;
-  }
-  print_list(list_array);
-  if (!sort_list(list_array)) {
-    printf("Failed to sort list\n");
-    return 0;
-  }
-  print_list(list_array);
-
-  return 0;
-}
-
 // Bubble Sort
 int sort_list(int list[]) {
   // Verify there's a list
